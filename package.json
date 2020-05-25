@@ -67,9 +67,9 @@
     "workbox-webpack-plugin": "4.3.1"
   },
   "scripts": {
-    "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
-    "test": "node scripts/test.js"
+    "start:renderer": "node scripts/renderer/start.js",
+    "build:renderer": "node scripts/renderer/build.js",
+    "test:renderer": "node scripts/renderer/test.js"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -96,27 +96,27 @@
   },
   "jest": {
     "roots": [
-      "<rootDir>/src"
+      "<rootDir>/src/renderer"
     ],
     "collectCoverageFrom": [
-      "src/**/*.{js,jsx,ts,tsx}",
-      "!src/**/*.d.ts"
+      "src/renderer/**/*.{js,jsx,ts,tsx}",
+      "!src/renderer/**/*.d.ts"
     ],
     "setupFiles": [
       "react-app-polyfill/jsdom"
     ],
     "setupFilesAfterEnv": [
-      "<rootDir>/src/setupTests.ts"
+      "<rootDir>/src/renderer/setupTests.ts"
     ],
     "testMatch": [
-      "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
-      "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}"
+      "<rootDir>/src/renderer/**/__tests__/**/*.{js,jsx,ts,tsx}",
+      "<rootDir>/src/renderer/**/*.{spec,test}.{js,jsx,ts,tsx}"
     ],
     "testEnvironment": "jest-environment-jsdom-fourteen",
     "transform": {
       "^.+\\.(js|jsx|ts|tsx)$": "<rootDir>/node_modules/babel-jest",
-      "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
-      "^(?!.*\\.(js|jsx|ts|tsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
+      "^.+\\.css$": "<rootDir>/config/renderer/jest/cssTransform.js",
+      "^(?!.*\\.(js|jsx|ts|tsx|css|json)$)": "<rootDir>/config/renderer/jest/fileTransform.js"
     },
     "transformIgnorePatterns": [
       "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$",
