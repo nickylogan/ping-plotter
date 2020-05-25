@@ -42,10 +42,14 @@ var __importStar = (this && this.__importStar) || function (mod) {
     result["default"] = mod;
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var electron_1 = require("electron");
 var path = __importStar(require("path"));
 var url = __importStar(require("url"));
+var chalk_1 = __importDefault(require("chalk"));
 var is = require('electron-util').is;
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -53,7 +57,7 @@ var mainWindow = null;
 var startUrl = is.development ?
     "http://localhost:3000" :
     url.format({
-        pathname: path.join(__dirname, '../build/index.html'),
+        pathname: path.join(__dirname, '../../build/index.html'),
         protocol: 'file:',
         slashes: true,
     });
@@ -99,11 +103,11 @@ function createWindow() {
         mainWindow = null;
     });
     mainWindow.once('ready-to-show', function () {
-        console.log("Window ready to show");
+        console.log(chalk_1.default.greenBright("Window ready to show"));
         mainWindow.maximize();
     });
     mainWindow.webContents.once('did-finish-load', function () {
-        console.log('Finished load');
+        console.log(chalk_1.default.greenBright('Finished loading web contents'));
         mainWindow.show();
     });
 }

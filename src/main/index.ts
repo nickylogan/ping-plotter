@@ -1,6 +1,7 @@
 import { app, BrowserWindow } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
+import chalk from "chalk";
 
 const { is } = require('electron-util');
 
@@ -12,7 +13,7 @@ let mainWindow: BrowserWindow | null = null;
 const startUrl = is.development ?
   `http://localhost:3000` :
   url.format({
-    pathname: path.join(__dirname, '../build/index.html'),
+    pathname: path.join(__dirname, '../../build/index.html'),
     protocol: 'file:',
     slashes: true,
   });
@@ -68,12 +69,12 @@ function createWindow() {
   });
 
   mainWindow.once('ready-to-show', () => {
-    console.log("Window ready to show");
+    console.log(chalk.greenBright("Window ready to show"));
     mainWindow!.maximize();
   });
 
   mainWindow.webContents.once('did-finish-load', () => {
-    console.log('Finished load');
+    console.log(chalk.greenBright('Finished loading web contents'));
     mainWindow!.show();
   });
 }
