@@ -11,7 +11,7 @@
   "scripts": {
     "start:react": "cross-env TSC_WATCHFILE=UseFsEventsWithFallbackDynamicPolling BROWSER=none node scripts/renderer/start.js",
     "start:electron": "node scripts/main/start.js",
-    "start": "concurrently --names \"REACT,ELECTRON\" -c \"cyan.bold,blue.bold\" -s first -k \"yarn start:react\" \"yarn start:electron\"",
+    "start": "node scripts/start.js",
     "build:react": "node scripts/renderer/build.js",
     "build:electron": "node scripts/main/build.js",
     "test:react": "node scripts/renderer/test.js"

@@ -39,12 +39,23 @@ watch.on("first_success", () => {
   const urls = prepareUrls(protocol, HOST, PORT);
 
   console.log(
-    chalk.magenta(`Waiting for react to start on ${urls.lanUrlForTerminal}`)
+    chalk.magenta(
+      `Waiting for React to start on ${chalk.bold(urls.localUrlForBrowser)}`
+    )
   );
-  waitOn({ resources: [urls.localUrlForBrowser] }, (err) => {
-    if (err) console.log(chalk.red(err));
-    spawnElectronProcess();
-  });
+
+  waitOn({ resources: [urls.localUrlForBrowser] })
+    .then(() => {
+      console.log(
+        chalk.cyan(
+          `${chalk.bold("React ready!")}, spawning electron process...`
+        )
+      );
+      spawnElectronProcess();
+    })
+    .catch((err) => {
+      console.log(chalk.red(err));
+    });
 });
 
 // Spawn an electron process for every successful compilation
