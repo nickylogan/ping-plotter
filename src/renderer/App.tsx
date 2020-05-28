@@ -1,12 +1,16 @@
-import React from "react";
-import { Card, Button } from "antd";
-import styles from "./App.module.less";
+import React from 'react';
+import { Button, Card, Typography } from 'antd';
+import styles from './App.module.less';
+
+const { Text } = Typography;
 
 function App() {
   return (
     <div className={styles.App}>
-      <Card hoverable title="It works!" bordered={false} style={{ width: 300 }}>
-        <Button type="primary">Yay!</Button>
+      <Card hoverable title={
+        <Text>Latency over time to <Text code>google.com</Text></Text>
+      } bordered={false}>
+        <Button>Cool!</Button>
       </Card>
     </div>
   );
