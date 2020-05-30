@@ -1,17 +1,16 @@
 import React from 'react';
-import { Button, Card, Typography } from 'antd';
 import styles from './App.module.less';
-
-const { Text } = Typography;
+import Chart from './components/Chart';
 
 function App() {
   return (
     <div className={styles.App}>
-      <Card hoverable title={
-        <Text>Latency over time to <Text code>google.com</Text></Text>
-      } bordered={false}>
-        <Button>Cool!</Button>
-      </Card>
+      <Chart
+        host={'8.8.8.8'}
+        color={"#E66AD2"}
+        style={{ height: 400, width: 800 }}
+        seconds={30}
+      />
     </div>
   );
 }
