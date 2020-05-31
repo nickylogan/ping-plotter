@@ -9,7 +9,7 @@
   "homepage": "./",
   "main": "src/main/index.js",
   "scripts": {
-    "start:react": "cross-env BROWSER=none node scripts/renderer/start.js",
+    "start:react": "cross-env TSC_WATCHFILE=UseFsEventsWithFallbackDynamicPolling BROWSER=none node scripts/renderer/start.js",
     "start:electron": "node scripts/main/start.js",
     "start": "node scripts/start.js",
     "build:react": "node scripts/renderer/build.js",
