@@ -11,8 +11,31 @@
   }
 }
 
-.title {
-  margin-bottom: 0 !important;
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .title {
+    margin-bottom: 0 !important;
+  }
+
+  .popover {
+    :global {
+      .ant-popover-inner-content {
+        padding: 0;
+      }
+    }
+  }
+
+  .menu {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .draggable {
+    cursor: move;
+  }
 }
 
 .tags {

@@ -1,10 +1,12 @@
 import React, { CSSProperties, useState } from 'react';
-import { Card, Tag, Typography } from 'antd';
+import { Button, Card, Space, Tag, Typography } from 'antd';
+import { DeleteOutlined as DeleteIcon, DragOutlined as DragIcon, } from '@ant-design/icons';
 import { CartesianGrid, Line, LineChart, ReferenceArea, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import moment from 'moment';
 import styles from './styles.module.less';
 import { useInterval } from '../../hooks';
 import clsx from 'clsx';
+import { noop } from '../../utils';
 
 const { Title } = Typography;
 
@@ -13,6 +15,8 @@ export type ChartProps = {
   color?: string;
   timeoutColor?: string;
   seconds?: number;
+
+  onDelete?: noop;
 
   className?: string;
   style?: CSSProperties;
@@ -31,6 +35,7 @@ const LatencyChart: React.FC<ChartProps> = (
     color,
     timeoutColor,
     seconds,
+    onDelete,
     className,
     style,
   }
@@ -80,7 +85,27 @@ const LatencyChart: React.FC<ChartProps> = (
     setPrevTs(ts);
   }, 100);
 
-  const title = <Title level={4} code className={styles.title}>{host}</Title>;
+  const header = (
+    <div className={styles.header}>
+      <Title level={4} code className={styles.title}>
+        {host}
+      </Title>
+      <Space>
+        <Button
+          type="default"
+          icon={<DragIcon/>}
+          shape="circle"
+          className={clsx('drag-handle', styles.draggable)}
+        />
+        <Button
+          type="ghost"
+          icon={<DeleteIcon/>}
+          shape="circle"
+          onClick={onDelete}
+        />
+      </Space>
+    </div>
+  );
 
   const latencyValues = data.filter(l => l.latency !== undefined).map(l => l.latency!);
   const max = Math.max(...latencyValues);
@@ -88,7 +113,7 @@ const LatencyChart: React.FC<ChartProps> = (
   const timeoutLength = moment(timeouts.reduce((init, x) => init + x[1] - x[0], 0)).milliseconds();
 
   return (
-    <Card hoverable title={title} className={clsx(styles.card, className)} style={style}>
+    <Card hoverable title={header} className={clsx(styles.card, className)} style={style}>
       <div className={styles.tags}>
         <Tag><strong>MAX</strong>: {max.toFixed(2)}ms</Tag>
         <Tag><strong>AVG</strong>: {avg.toFixed(2)}ms</Tag>

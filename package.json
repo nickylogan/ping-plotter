@@ -17,6 +17,7 @@
     "test:react": "node scripts/renderer/test.js"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.2.1",
     "antd": "^4.2.5",
     "chalk": "^4.0.0",
     "clsx": "^1.1.1",

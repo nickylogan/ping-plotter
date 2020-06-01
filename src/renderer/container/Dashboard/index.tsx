@@ -23,6 +23,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
       cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
       compactType="vertical"
       containerPadding={[16, 16]}
+      draggableHandle=".drag-handle"
     >
       <div key="a">
         <LatencyChart
