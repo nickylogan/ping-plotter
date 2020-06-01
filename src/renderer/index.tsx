@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import './index.less';
+import 'react-grid-layout/css/styles.css';
+import 'react-resizable/css/styles.css';
 import 'typeface-inter';
 import 'typeface-roboto-mono';
 

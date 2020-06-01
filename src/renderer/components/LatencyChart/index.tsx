@@ -95,39 +95,41 @@ const LatencyChart: React.FC<ChartProps> = (
         <Tag><strong>Timeout</strong>: {timeoutLength / 1000}s</Tag>
       </div>
       <div className={styles.chartContainer}>
-        <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={data} margin={{ left: -20 }}>
-            <CartesianGrid stroke='#ffffff' strokeOpacity={0.1}/>
-            <XAxis
-              dataKey="timestamp"
-              domain={['auto', 'auto']}
-              name="Timestamp"
-              tickFormatter={t => moment(t).format('HH:mm:ss')}
-              tickSize={12}
-              type="number"
-              scale="time"
-              interval="preserveStartEnd"
-              allowDataOverflow
-            />
-            <YAxis dataKey="latency" name="Latency (ms)"/>
-            <Tooltip content={<></>}/>
-            <Line
-              dot={false}
-              dataKey="latency"
-              type="linear"
-              stroke={color}
-              strokeWidth={2}
-              isAnimationActive={false}
-            />
-            {timeouts.map(interval => (
-              <ReferenceArea
-                key={interval[0]}
-                x1={interval[0]} x2={interval[1]}
-                fill={timeoutColor}
-              />))
-            }
-          </LineChart>
-        </ResponsiveContainer>
+        <div className={styles.chartContent}>
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={data} margin={{ left: -20 }} syncId="latency-chart">
+              <CartesianGrid stroke='#ffffff' strokeOpacity={0.1}/>
+              <XAxis
+                dataKey="timestamp"
+                domain={['auto', 'auto']}
+                name="Timestamp"
+                tickFormatter={t => moment(t).format('HH:mm:ss')}
+                tickSize={12}
+                type="number"
+                scale="time"
+                interval="preserveStartEnd"
+                allowDataOverflow
+              />
+              <YAxis dataKey="latency" name="Latency (ms)"/>
+              <Tooltip content={<></>}/>
+              <Line
+                dot={false}
+                dataKey="latency"
+                type="linear"
+                stroke={color}
+                strokeWidth={2}
+                isAnimationActive={false}
+              />
+              {timeouts.map(interval => (
+                <ReferenceArea
+                  key={interval[0]}
+                  x1={interval[0]} x2={interval[1]}
+                  fill={timeoutColor}
+                />))
+              }
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
       </div>
     </Card>
   );
