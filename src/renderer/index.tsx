@@ -1,12 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import './index.less';
+import 'react-grid-layout/css/styles.css';
+import 'react-resizable/css/styles.css';
+import 'typeface-inter';
+import 'typeface-roboto-mono';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <App/>
   </React.StrictMode>,
   document.getElementById('root')
 );

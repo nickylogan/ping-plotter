@@ -1,0 +1,56 @@
+.card {
+  display: flex;
+  flex-direction: column;
+
+  :global {
+    .ant-card-body {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .title {
+    margin-bottom: 0 !important;
+  }
+
+  .popover {
+    :global {
+      .ant-popover-inner-content {
+        padding: 0;
+      }
+    }
+  }
+
+  .menu {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .draggable {
+    cursor: move;
+  }
+}
+
+.tags {
+  padding-bottom: 24px;
+}
+
+.chartContainer {
+  position: relative;
+  flex-grow: 1;
+}
+
+.chartContent {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
