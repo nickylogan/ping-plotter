@@ -1,0 +1,39 @@
+diff --git a/node_modules/devtron/manifest.json b/node_modules/devtron/manifest.json
+index 24613a4..b71c171 100644
+--- a/node_modules/devtron/manifest.json
++++ b/node_modules/devtron/manifest.json
+@@ -1,10 +1,11 @@
+ {
+   "name": "devtron",
+   "version": "1.0",
++  "manifest_version": 2,
+   "devtools_page": "static/devtron.html",
+   "content_scripts": [
+     {
+-      "matches": ["*"],
++      "matches": ["<all_urls>"],
+       "js": ["out/browser-globals.js"]
+     }
+   ]
+diff --git a/node_modules/devtron/out/devtron.js b/node_modules/devtron/out/devtron.js
+new file mode 100644
+index 0000000..d753287
+--- /dev/null
++++ b/node_modules/devtron/out/devtron.js
+@@ -0,0 +1 @@
++chrome.devtools.panels.create('Devtron', 'devtron.png', 'static/index.html')
+\ No newline at end of file
+diff --git a/node_modules/devtron/static/devtron.html b/node_modules/devtron/static/devtron.html
+index e3f7da6..4183bdf 100644
+--- a/node_modules/devtron/static/devtron.html
++++ b/node_modules/devtron/static/devtron.html
+@@ -3,8 +3,6 @@
+   <head>
+     <meta charset="utf-8">
+     <title>devtron</title>
+-    <script>
+-      chrome.devtools.panels.create('Devtron', 'devtron.png', 'static/index.html')
+-    </script>
++    <script src="../out/devtron.js"></script>
+   </head>
+ </html>
