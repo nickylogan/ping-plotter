@@ -1,10 +1,10 @@
 {
-  "name": "ping-plotter",
+  "name": "helios",
   "version": "0.1.0",
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/nickylogan/ping-plotter"
+    "url": "https://github.com/nickylogan/helios"
   },
   "homepage": "./",
   "main": "src/main/index.js",
