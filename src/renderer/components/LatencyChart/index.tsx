@@ -1,12 +1,13 @@
-import React, { CSSProperties, useState } from 'react';
+import DeleteIcon from '@ant-design/icons/DeleteOutlined';
+import DragIcon from '@ant-design/icons/DragOutlined';
 import { Button, Card, Space, Tag, Typography } from 'antd';
-import { DeleteOutlined as DeleteIcon, DragOutlined as DragIcon, } from '@ant-design/icons';
-import { CartesianGrid, Line, LineChart, ReferenceArea, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import moment from 'moment';
-import styles from './styles.module.less';
-import { useInterval } from '../../hooks';
 import clsx from 'clsx';
+import { ipcRenderer } from 'electron';
+import moment from 'moment';
+import React, { CSSProperties, useEffect, useState } from 'react';
+import { CartesianGrid, Line, LineChart, ReferenceArea, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { noop } from '../../utils';
+import styles from './styles.module.less';
 
 const { Title } = Typography;
 
@@ -65,25 +66,25 @@ const LatencyChart: React.FC<ChartProps> = (
     )) as [number, number][]);
   };
 
-  useInterval(() => {
-    const r = Math.random() * 100;
-    const ts = Date.now();
-    const lat: Latency = {
-      latency: r > 98 ? undefined : r,
-      timestamp: ts,
-    };
-
+  const handleData = (evt: any, lat: Latency) => {
     if (lat.latency === undefined) {
       setPrevRto(true);
-      appendTimeout([prevTs, ts]);
+      appendTimeout([prevTs, lat.timestamp]);
     } else if (prevRto) {
       setPrevRto(false);
-      appendTimeout([prevTs, ts]);
+      appendTimeout([prevTs, lat.timestamp]);
     }
 
     appendData(lat);
-    setPrevTs(ts);
-  }, 100);
+    setPrevTs(lat.timestamp);
+  };
+
+  useEffect(() => {
+    ipcRenderer.on('PING_DATA', handleData);
+    return () => {
+      ipcRenderer.removeListener('PING_DATA', handleData);
+    }
+  }, [data]);
 
   const header = (
     <div className={styles.header}>
@@ -108,7 +109,7 @@ const LatencyChart: React.FC<ChartProps> = (
   );
 
   const latencyValues = data.filter(l => l.latency !== undefined).map(l => l.latency!);
-  const max = Math.max(...latencyValues);
+  const max = latencyValues.length && Math.max(...latencyValues);
   const avg = latencyValues.length && latencyValues.reduce((a, b) => a + b) / latencyValues.length;
   const timeoutLength = moment(timeouts.reduce((init, x) => init + x[1] - x[0], 0)).milliseconds();
 
@@ -140,7 +141,7 @@ const LatencyChart: React.FC<ChartProps> = (
               <Line
                 dot={false}
                 dataKey="latency"
-                type="linear"
+                type="step"
                 stroke={color}
                 strokeWidth={2}
                 isAnimationActive={false}
