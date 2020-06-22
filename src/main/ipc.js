@@ -21,8 +21,10 @@ exports.registerEvents = function (window) {
     var createRequest = function (id) {
         clearInterval(reqs[id]);
         reqs[id] = setInterval(function () {
-            if (window.isDestroyed())
+            if (window.isDestroyed()) {
+                clearInterval(reqs[id]);
                 return;
+            }
             var r = Math.random() * 100;
             var ts = Date.now();
             var lat = {

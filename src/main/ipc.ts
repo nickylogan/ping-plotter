@@ -25,7 +25,10 @@ export const registerEvents = (window: BrowserWindow) => {
   const createRequest = (id: string) => {
     clearInterval(reqs[id]);
     reqs[id] = setInterval(() => {
-      if (window.isDestroyed()) return;
+      if (window.isDestroyed()) {
+        clearInterval(reqs[id]);
+        return;
+      }
 
       const r = Math.random() * 100;
       const ts = Date.now();
