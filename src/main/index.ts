@@ -1,7 +1,8 @@
-import { app, BrowserWindow } from 'electron';
+import chalk from 'chalk';
+import { app, BrowserWindow, BrowserWindowConstructorOptions } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
-import chalk from "chalk";
+import App from './app';
 
 const { is } = require('electron-util');
 
@@ -34,31 +35,24 @@ const installExtensions = async () => {
 
   return Promise.all(
     extensions.map(name => installer.default(installer[name], forceDownload)),
-  ).catch(console.log);
+  ).catch(console.error);
 };
 
 function createWindow() {
   // Create the browser window.
-  mainWindow = new BrowserWindow({
-    minWidth: 1280,
-    minHeight: 720,
+  const opts: BrowserWindowConstructorOptions = {
     webPreferences: {
       webSecurity: !is.development,
       nodeIntegration: true,
     },
     title: 'PingPlotter',
     show: false,
-  });
+  };
 
-  // and load the index.html of the app.
+  // init window
+  mainWindow = new BrowserWindow(opts);
   mainWindow.loadURL(startUrl);
-
-  mainWindow.maximize();
-
   mainWindow.hide();
-
-  // Open the DevTools.
-  // mainWindow.webContents.openDevTools();
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
@@ -69,20 +63,24 @@ function createWindow() {
   });
 
   mainWindow.once('ready-to-show', () => {
-    console.log(chalk.greenBright("Window ready to show"));
     mainWindow!.maximize();
   });
 
   mainWindow.webContents.once('did-finish-load', () => {
     console.log(chalk.greenBright('Finished loading web contents'));
     mainWindow!.show();
+    mainWindow!.maximize();
   });
+
+  const app = new App(mainWindow);
+  app.run();
 }
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', async () => {
+  console.log(chalk.greenBright('App is ready'));
   if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
     await installExtensions();
   }

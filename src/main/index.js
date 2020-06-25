@@ -35,6 +35,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
@@ -42,14 +45,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
     result["default"] = mod;
     return result;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
+var chalk_1 = __importDefault(require("chalk"));
 var electron_1 = require("electron");
 var path = __importStar(require("path"));
 var url = __importStar(require("url"));
-var chalk_1 = __importDefault(require("chalk"));
+var app_1 = __importDefault(require("./app"));
 var is = require('electron-util').is;
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -74,27 +75,23 @@ var installExtensions = function () { return __awaiter(void 0, void 0, void 0, f
         installer = require('electron-devtools-installer');
         forceDownload = !!process.env.UPGRADE_EXTENSIONS;
         extensions = ['REACT_DEVELOPER_TOOLS', 'REDUX_DEVTOOLS'];
-        return [2 /*return*/, Promise.all(extensions.map(function (name) { return installer.default(installer[name], forceDownload); })).catch(console.log)];
+        return [2 /*return*/, Promise.all(extensions.map(function (name) { return installer.default(installer[name], forceDownload); })).catch(console.error)];
     });
 }); };
 function createWindow() {
     // Create the browser window.
-    mainWindow = new electron_1.BrowserWindow({
-        minWidth: 1280,
-        minHeight: 720,
+    var opts = {
         webPreferences: {
             webSecurity: !is.development,
             nodeIntegration: true,
         },
         title: 'PingPlotter',
         show: false,
-    });
-    // and load the index.html of the app.
+    };
+    // init window
+    mainWindow = new electron_1.BrowserWindow(opts);
     mainWindow.loadURL(startUrl);
-    mainWindow.maximize();
     mainWindow.hide();
-    // Open the DevTools.
-    // mainWindow.webContents.openDevTools();
     // Emitted when the window is closed.
     mainWindow.on('closed', function () {
         // Dereference the window object, usually you would store windows
@@ -103,13 +100,15 @@ function createWindow() {
         mainWindow = null;
     });
     mainWindow.once('ready-to-show', function () {
-        console.log(chalk_1.default.greenBright("Window ready to show"));
         mainWindow.maximize();
     });
     mainWindow.webContents.once('did-finish-load', function () {
         console.log(chalk_1.default.greenBright('Finished loading web contents'));
         mainWindow.show();
+        mainWindow.maximize();
     });
+    var app = new app_1.default(mainWindow);
+    app.run();
 }
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -118,6 +117,7 @@ electron_1.app.on('ready', function () { return __awaiter(void 0, void 0, void 0
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
+                console.log(chalk_1.default.greenBright('App is ready'));
                 if (!(process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true')) return [3 /*break*/, 2];
                 return [4 /*yield*/, installExtensions()];
             case 1:

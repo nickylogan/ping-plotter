@@ -1,3 +1,4 @@
+import { ipcRenderer } from 'electron';
 import React from 'react';
 import { Layouts, Responsive, WidthProvider } from 'react-grid-layout';
 import LatencyChart from '../../components/LatencyChart';
@@ -9,12 +10,12 @@ type DashboardProps = {};
 
 const layout: Layouts = {
   lg: [
-    { i: 'a', x: 2, y: 2, w: 4, h: 2 },
-    { i: 'b', x: 6, y: 2, w: 4, h: 2 },
+    { i: 'a', x: 3, y: 2, w: 6, h: 2 },
   ]
 };
 
 const Dashboard: React.FC<DashboardProps> = () => {
+  ipcRenderer.send('PING_REQUEST', {host: '8.8.8.8', protocol: 'icmp'});
   return (
     <ResponsiveGridLayout
       className={styles.dashboard}
@@ -26,15 +27,6 @@ const Dashboard: React.FC<DashboardProps> = () => {
       draggableHandle=".drag-handle"
     >
       <div key="a">
-        <LatencyChart
-          className={styles.widget}
-          host={'8.8.8.8'}
-          color={'#419EF9'}
-          timeoutColor={'#FD77A4'}
-          seconds={30}
-        />
-      </div>
-      <div key="b">
         <LatencyChart
           className={styles.widget}
           host={'8.8.8.8'}
