@@ -1,7 +1,7 @@
 import { DataPoint } from '../definitions/datapoint';
 import { TimeSeries } from '../definitions/timeseries';
 
-interface TimeSeriesPersistence {
+interface TimeSeriesStore {
   append(key: string, value: DataPoint): Promise<void>;
 
   query(key: string): Promise<DataPoint>;
@@ -13,4 +13,4 @@ interface TimeSeriesPersistence {
   delete(key: string): Promise<void>;
 }
 
-export default TimeSeriesPersistence;
+export default TimeSeriesStore;

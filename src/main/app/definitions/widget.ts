@@ -1,7 +1,7 @@
 export type Widget = {
   id: string
   title: string
-  event: string
+  metric: string
   type: string
   interval: number
 };

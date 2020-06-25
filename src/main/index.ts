@@ -2,7 +2,7 @@ import chalk from 'chalk';
 import { app, BrowserWindow, BrowserWindowConstructorOptions } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
-import { registerEvents } from './ipc';
+import App from './app';
 
 const { is } = require('electron-util');
 
@@ -72,7 +72,8 @@ function createWindow() {
     mainWindow!.maximize();
   });
 
-  registerEvents(mainWindow);
+  const app = new App(mainWindow);
+  app.run();
 }
 
 // This method will be called when Electron has finished

@@ -50,7 +50,7 @@ var chalk_1 = __importDefault(require("chalk"));
 var electron_1 = require("electron");
 var path = __importStar(require("path"));
 var url = __importStar(require("url"));
-var ipc_1 = require("./ipc");
+var app_1 = __importDefault(require("./app"));
 var is = require('electron-util').is;
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -107,7 +107,8 @@ function createWindow() {
         mainWindow.show();
         mainWindow.maximize();
     });
-    ipc_1.registerEvents(mainWindow);
+    var app = new app_1.default(mainWindow);
+    app.run();
 }
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.

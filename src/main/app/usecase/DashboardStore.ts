@@ -1,7 +1,7 @@
 import { Dashboard } from '../definitions/dashboard';
 import { Widget } from '../definitions/widget';
 
-interface DashboardPersistence {
+interface DashboardStore {
   get(): Promise<Dashboard>;
 
   getWidget(id: string): Promise<Widget>;
@@ -13,4 +13,4 @@ interface DashboardPersistence {
   deleteWidget(id: string): Promise<void>;
 }
 
-export default DashboardPersistence;
+export default DashboardStore;
