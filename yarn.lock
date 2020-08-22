@@ -9161,6 +9161,11 @@ pify@^4.0.1:
   resolved "https://registry.yarnpkg.com/pify/-/pify-4.0.1.tgz#4b2cd25c50d598735c50292224fd8c6df41e3231"
   integrity sha512-uB80kBFb/tfd68bVleG9T5GGsGPjJrLAUpR5PZIrhBnIaRTQRjqdJSsIKkOP6OAIFbj7GOrcudc5pNjZ+geV2g==
 
+pingman@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/pingman/-/pingman-1.0.7.tgz#bd46bb1de6aa44e74a131b123e9fba7438d393e5"
+  integrity sha512-u+oIeyI5cxpznrvqCBWoiB4w3hhxVl8Zp/AfZnQDF4sYOljOV8Bo3Wnca0PQvyamcCf44YRo54VcHG6vjuIw3A==
+
 pinkie-promise@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/pinkie-promise/-/pinkie-promise-2.0.1.tgz#2135d6dfa7a358c069ac9b178776288228450ffa"
