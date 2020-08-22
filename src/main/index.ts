@@ -80,7 +80,7 @@ function createWindow() {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', async () => {
-  console.log(chalk.greenBright('App is ready'));
+  console.log(chalk.blueBright('App is ready'));
   if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
     await installExtensions();
   }
