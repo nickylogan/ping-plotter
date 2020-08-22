@@ -117,7 +117,7 @@ electron_1.app.on('ready', function () { return __awaiter(void 0, void 0, void 0
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                console.log(chalk_1.default.greenBright('App is ready'));
+                console.log(chalk_1.default.blueBright('App is ready'));
                 if (!(process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true')) return [3 /*break*/, 2];
                 return [4 /*yield*/, installExtensions()];
             case 1:
