@@ -2,7 +2,7 @@ import autoBind from 'auto-bind';
 import { v4 as uuidv4 } from 'uuid';
 import { Dashboard } from '../definitions/dashboard';
 import { DataPoint } from '../definitions/datapoint';
-import { Widget } from '../definitions/widget';
+import { Widget, WidgetEdit } from '../definitions/widget';
 import DashboardStore from './DashboardStore';
 import NetworkPing from './metrics/NetworkPing';
 import Repeater, { RepeatTerminator } from './Repeater';
@@ -52,8 +52,8 @@ class DashboardInteractor {
     }
   }
 
-  async updateWidget(id: string, widget: Widget): Promise<void> {
-    return this.dashboardStore.updateWidget(id, widget);
+  async updateWidget(id: string, edit: WidgetEdit): Promise<void> {
+    return this.dashboardStore.updateWidget(id, edit);
   }
 
   async deleteWidget(id: string): Promise<void> {

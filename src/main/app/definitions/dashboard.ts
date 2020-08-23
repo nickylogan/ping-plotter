@@ -1,5 +1,8 @@
 import { Widget } from './widget';
 
 export type Dashboard = {
-  [id: string]: Widget;
+  title?: string;
+  widgets: {
+    [id: string]: Widget;
+  }
 };
