@@ -6,4 +6,6 @@ export type Widget = {
   interval: number
 };
 
+export type WidgetEdit = Partial<Widget>;
+
 export type WidgetType = 'timeseries' | 'query';

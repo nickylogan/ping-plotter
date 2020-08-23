@@ -1,5 +1,5 @@
 import { Dashboard } from '../definitions/dashboard';
-import { Widget } from '../definitions/widget';
+import { Widget, WidgetEdit } from '../definitions/widget';
 
 interface DashboardStore {
   get(): Promise<Dashboard>;
@@ -8,7 +8,7 @@ interface DashboardStore {
 
   addWidget(id: string, widget: Widget): Promise<void>;
 
-  updateWidget(id: string, widget: Widget): Promise<void>;
+  updateWidget(id: string, edit: WidgetEdit): Promise<void>;
 
   deleteWidget(id: string): Promise<void>;
 }

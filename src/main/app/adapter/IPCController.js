@@ -26,8 +26,8 @@ var IPCController = /** @class */ (function () {
                 .catch(function (err) { return evt.reply(events_1.Events.RES_ERR_ADD_WIDGET, err); });
         });
         electron_1.ipcMain.on(events_1.Events.REQ_EDIT_WIDGET, function (evt, message) {
-            var updated = message.data;
-            _this.interactor.updateWidget(updated.id, updated)
+            var edit = message.data;
+            _this.interactor.updateWidget(edit.id, edit)
                 .then(function () { return evt.reply(events_1.Events.RES_OK_EDIT_WIDGET); })
                 .catch(function (err) { return evt.reply(events_1.Events.RES_ERR_EDIT_WIDGET, err); });
         });

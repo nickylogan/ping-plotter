@@ -85,10 +85,10 @@ var DashboardInteractor = /** @class */ (function () {
             });
         });
     };
-    DashboardInteractor.prototype.updateWidget = function (id, widget) {
+    DashboardInteractor.prototype.updateWidget = function (id, edit) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, this.dashboardStore.updateWidget(id, widget)];
+                return [2 /*return*/, this.dashboardStore.updateWidget(id, edit)];
             });
         });
     };
