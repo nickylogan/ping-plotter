@@ -51,7 +51,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var jest_when_1 = require("jest-when");
-var NeDBImpl_1 = __importDefault(require("./NeDBImpl"));
+var NedbAdapter_1 = __importDefault(require("./NedbAdapter"));
 var nedb_1 = __importDefault(require("nedb"));
 jest.mock('nedb');
 describe('append()', function () {
@@ -69,7 +69,7 @@ describe('append()', function () {
                     mockInsert = jest.fn().mockImplementation(function (newDoc, callback) { return callback(null, {}); });
                     nedb_1.default.prototype.insert = mockInsert;
                     db = new nedb_1.default();
-                    impl = new NeDBImpl_1.default(db);
+                    impl = new NedbAdapter_1.default(db);
                     return [4 /*yield*/, expect(impl.append(key, value)).resolves.toBeUndefined()];
                 case 1:
                     _a.sent();
@@ -86,7 +86,7 @@ describe('append()', function () {
                     mockInsert = jest.fn().mockImplementation(function (newDoc, callback) { return callback(new Error('error'), {}); });
                     nedb_1.default.prototype.insert = mockInsert;
                     db = new nedb_1.default();
-                    impl = new NeDBImpl_1.default(db);
+                    impl = new NedbAdapter_1.default(db);
                     return [4 /*yield*/, expect(impl.append(key, value)).rejects.toBeDefined()];
                 case 1:
                     _a.sent();
@@ -106,7 +106,7 @@ describe('delete()', function () {
                     mockDelete = jest.fn().mockImplementation(function (query, opts, callback) { return callback(null, {}); });
                     nedb_1.default.prototype.remove = mockDelete;
                     db = new nedb_1.default();
-                    impl = new NeDBImpl_1.default(db);
+                    impl = new NedbAdapter_1.default(db);
                     return [4 /*yield*/, expect(impl.delete(key)).resolves.toBeUndefined()];
                 case 1:
                     _a.sent();
@@ -123,7 +123,7 @@ describe('delete()', function () {
                     mockDelete = jest.fn().mockImplementation(function (query, opts, callback) { return callback(new Error('error'), {}); });
                     nedb_1.default.prototype.remove = mockDelete;
                     db = new nedb_1.default();
-                    impl = new NeDBImpl_1.default(db);
+                    impl = new NedbAdapter_1.default(db);
                     return [4 /*yield*/, expect(impl.delete(key)).rejects.toBeDefined()];
                 case 1:
                     _a.sent();
@@ -158,7 +158,7 @@ describe('fetch()', function () {
                         .mockReturnValue({ sort: mockSort });
                     nedb_1.default.prototype.find = mockFind;
                     db = new nedb_1.default();
-                    impl = new NeDBImpl_1.default(db);
+                    impl = new NedbAdapter_1.default(db);
                     return [4 /*yield*/, expect(impl.fetch(key, begin, end)).resolves.toEqual(docs)];
                 case 1:
                     _a.sent();
@@ -180,7 +180,7 @@ describe('fetch()', function () {
                         .mockReturnValue({ sort: mockSort });
                     nedb_1.default.prototype.find = mockFind;
                     db = new nedb_1.default();
-                    impl = new NeDBImpl_1.default(db);
+                    impl = new NedbAdapter_1.default(db);
                     return [4 /*yield*/, expect(impl.fetch(key, begin, end)).rejects.toBeDefined()];
                 case 1:
                     _a.sent();
@@ -217,7 +217,7 @@ describe('fetchLast()', function () {
                         .mockReturnValue({ sort: mockSort });
                     nedb_1.default.prototype.find = mockFind;
                     db = new nedb_1.default();
-                    impl = new NeDBImpl_1.default(db);
+                    impl = new NedbAdapter_1.default(db);
                     return [4 /*yield*/, expect(impl.fetchLast(key, duration)).resolves.toEqual(docs)];
                 case 1:
                     _a.sent();
@@ -240,7 +240,7 @@ describe('fetchLast()', function () {
                         .mockReturnValue({ sort: mockSort });
                     nedb_1.default.prototype.find = mockFind;
                     db = new nedb_1.default();
-                    impl = new NeDBImpl_1.default(db);
+                    impl = new NedbAdapter_1.default(db);
                     return [4 /*yield*/, expect(impl.fetchLast(key, duration)).rejects.toBeDefined()];
                 case 1:
                     _a.sent();
@@ -273,7 +273,7 @@ describe('query()', function () {
                         .mockReturnValue({ sort: mockSort });
                     nedb_1.default.prototype.find = mockFind;
                     db = new nedb_1.default();
-                    impl = new NeDBImpl_1.default(db);
+                    impl = new NedbAdapter_1.default(db);
                     return [4 /*yield*/, expect(impl.query(key)).resolves.toEqual(docs[0])];
                 case 1:
                     _a.sent();
@@ -297,7 +297,7 @@ describe('query()', function () {
                         .mockReturnValue({ sort: mockSort });
                     nedb_1.default.prototype.find = mockFind;
                     db = new nedb_1.default();
-                    impl = new NeDBImpl_1.default(db);
+                    impl = new NedbAdapter_1.default(db);
                     return [4 /*yield*/, expect(impl.query(key)).rejects.toBeDefined()];
                 case 1:
                     _a.sent();

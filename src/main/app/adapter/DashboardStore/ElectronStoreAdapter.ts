@@ -3,7 +3,7 @@ import { Dashboard } from '../../definitions/dashboard';
 import { Widget, WidgetEdit } from '../../definitions/widget';
 import DashboardStore from '../../usecase/DashboardStore';
 
-class ElectronStoreImpl implements DashboardStore {
+class ElectronStoreAdapter implements DashboardStore {
   private readonly store: ElectronStore<any>;
 
   constructor(store: ElectronStore) {
@@ -61,4 +61,4 @@ class ElectronStoreImpl implements DashboardStore {
   }
 }
 
-export default ElectronStoreImpl;
+export default ElectronStoreAdapter;

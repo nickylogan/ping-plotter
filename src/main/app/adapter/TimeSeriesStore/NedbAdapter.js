@@ -11,11 +11,11 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var NeDBImpl = /** @class */ (function () {
-    function NeDBImpl(db) {
+var NedbAdapter = /** @class */ (function () {
+    function NedbAdapter(db) {
         this.db = db;
     }
-    NeDBImpl.prototype.append = function (key, value) {
+    NedbAdapter.prototype.append = function (key, value) {
         var _this = this;
         return new Promise(function (resolve, reject) {
             _this.db.insert(__assign({ key: key }, value), function (err) {
@@ -26,7 +26,7 @@ var NeDBImpl = /** @class */ (function () {
             });
         });
     };
-    NeDBImpl.prototype.delete = function (key) {
+    NedbAdapter.prototype.delete = function (key) {
         var _this = this;
         return new Promise(function (resolve, reject) {
             _this.db.remove({ key: key }, { multi: true }, function (err) {
@@ -37,7 +37,7 @@ var NeDBImpl = /** @class */ (function () {
             });
         });
     };
-    NeDBImpl.prototype.fetch = function (key, begin, end) {
+    NedbAdapter.prototype.fetch = function (key, begin, end) {
         var _this = this;
         return new Promise(function (resolve, reject) {
             _this.db.find({ key: key, timestamp: { $gte: begin, $lt: end } })
@@ -50,7 +50,7 @@ var NeDBImpl = /** @class */ (function () {
             });
         });
     };
-    NeDBImpl.prototype.fetchLast = function (key, duration) {
+    NedbAdapter.prototype.fetchLast = function (key, duration) {
         var _this = this;
         return new Promise(function (resolve, reject) {
             var begin = Date.now() - duration;
@@ -64,7 +64,7 @@ var NeDBImpl = /** @class */ (function () {
             });
         });
     };
-    NeDBImpl.prototype.query = function (key) {
+    NedbAdapter.prototype.query = function (key) {
         var _this = this;
         return new Promise(function (resolve, reject) {
             _this.db.find({ key: key })
@@ -78,6 +78,6 @@ var NeDBImpl = /** @class */ (function () {
             });
         });
     };
-    return NeDBImpl;
+    return NedbAdapter;
 }());
-exports.default = NeDBImpl;
+exports.default = NedbAdapter;

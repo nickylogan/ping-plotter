@@ -1,5 +1,5 @@
-import NeDBImpl from './NeDBImpl';
+import NedbAdapter from './NedbAdapter';
 
 export {
-  NeDBImpl,
+  NedbAdapter,
 };

@@ -1,5 +1,5 @@
-import ElectronStoreImpl from './ElectronStoreImpl';
+import ElectronStoreAdapter from './ElectronStoreAdapter';
 
 export {
-  ElectronStoreImpl,
+  ElectronStoreAdapter,
 };

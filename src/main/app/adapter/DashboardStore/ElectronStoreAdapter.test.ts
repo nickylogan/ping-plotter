@@ -1,7 +1,7 @@
 import Store from 'electron-store';
 import { when } from 'jest-when';
 import { Widget, WidgetEdit } from '../../definitions/widget';
-import ElectronStoreImpl from './ElectronStoreImpl';
+import ElectronStoreAdapter from './ElectronStoreAdapter';
 
 jest.mock('electron-store');
 
@@ -23,7 +23,7 @@ describe('addWidget()', () => {
     Store.prototype.set = mockSet;
 
     const store = new Store();
-    const impl = new ElectronStoreImpl(store);
+    const impl = new ElectronStoreAdapter(store);
     await expect(impl.addWidget(id, widget)).resolves.toBeUndefined();
   });
 
@@ -34,7 +34,7 @@ describe('addWidget()', () => {
     Store.prototype.set = mockSet;
 
     const store = new Store();
-    const impl = new ElectronStoreImpl(store);
+    const impl = new ElectronStoreAdapter(store);
     await expect(impl.addWidget(id, widget)).rejects.toBeDefined();
 
     expect(mockSet).not.toBeCalled();
@@ -48,7 +48,7 @@ describe('addWidget()', () => {
     Store.prototype.set = mockSet;
 
     const store = new Store();
-    const impl = new ElectronStoreImpl(store);
+    const impl = new ElectronStoreAdapter(store);
     await expect(impl.addWidget(id, widget)).rejects.toBeDefined();
   });
 });
@@ -62,7 +62,7 @@ describe('deleteWidget()', () => {
     Store.prototype.delete = mockDelete;
 
     const store = new Store();
-    const impl = new ElectronStoreImpl(store);
+    const impl = new ElectronStoreAdapter(store);
     await expect(impl.deleteWidget(id)).resolves.toBeUndefined();
   });
 });
@@ -87,7 +87,7 @@ describe('get()', () => {
     Store.prototype.get = mockGet;
 
     const store = new Store();
-    const impl = new ElectronStoreImpl(store);
+    const impl = new ElectronStoreAdapter(store);
     await expect(impl.get()).resolves.toEqual(dashboard);
   });
 });
@@ -108,7 +108,7 @@ describe('getWidget()', () => {
     Store.prototype.get = mockGet;
 
     const store = new Store();
-    const impl = new ElectronStoreImpl(store);
+    const impl = new ElectronStoreAdapter(store);
     await expect(impl.getWidget(id)).resolves.toEqual(widget);
   });
 
@@ -118,7 +118,7 @@ describe('getWidget()', () => {
     Store.prototype.get = mockGet;
 
     const store = new Store();
-    const impl = new ElectronStoreImpl(store);
+    const impl = new ElectronStoreAdapter(store);
     await expect(impl.getWidget(id)).rejects.toBeDefined();
   });
 });
@@ -149,7 +149,7 @@ describe('updateWidget()', () => {
     Store.prototype.set = mockSet;
 
     const store = new Store();
-    const impl = new ElectronStoreImpl(store);
+    const impl = new ElectronStoreAdapter(store);
     await expect(impl.updateWidget(id, edit)).resolves.toBeUndefined();
   });
 
@@ -160,7 +160,7 @@ describe('updateWidget()', () => {
     Store.prototype.set = mockSet;
 
     const store = new Store();
-    const impl = new ElectronStoreImpl(store);
+    const impl = new ElectronStoreAdapter(store);
     await expect(impl.updateWidget(id, widget)).rejects.toBeDefined();
 
     expect(mockSet).not.toBeCalled();
@@ -174,7 +174,7 @@ describe('updateWidget()', () => {
     Store.prototype.set = mockSet;
 
     const store = new Store();
-    const impl = new ElectronStoreImpl(store);
+    const impl = new ElectronStoreAdapter(store);
     await expect(impl.updateWidget(id, widget)).rejects.toBeDefined();
   });
 });
