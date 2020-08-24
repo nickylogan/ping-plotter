@@ -11,7 +11,6 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NeDBImpl = void 0;
 var NeDBImpl = /** @class */ (function () {
     function NeDBImpl(db) {
         this.db = db;
@@ -81,4 +80,4 @@ var NeDBImpl = /** @class */ (function () {
     };
     return NeDBImpl;
 }());
-exports.NeDBImpl = NeDBImpl;
+exports.default = NeDBImpl;
