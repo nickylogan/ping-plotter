@@ -3,7 +3,7 @@ import { TimeSeries } from '../../definitions/timeseries';
 import TimeSeriesStore from '../../usecase/TimeSeriesStore';
 import NeDB from 'nedb';
 
-class NeDBImpl implements TimeSeriesStore {
+class NedbAdapter implements TimeSeriesStore {
   private readonly db: NeDB;
 
   constructor(db: NeDB) {
@@ -79,4 +79,4 @@ class NeDBImpl implements TimeSeriesStore {
   }
 }
 
-export default NeDBImpl;
+export default NedbAdapter;

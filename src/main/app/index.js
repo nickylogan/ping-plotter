@@ -1,4 +1,23 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -41,11 +60,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ElectronStore_1 = __importDefault(require("../db/ElectronStore"));
 var Nedb_1 = __importDefault(require("../db/Nedb"));
-var ElectronStoreImpl_1 = __importDefault(require("./adapter/DashboardStore/ElectronStoreImpl"));
+var DashboardStore = __importStar(require("./adapter/DashboardStore"));
 var IPCController_1 = __importDefault(require("./adapter/IPCController"));
 var IPCPublisher_1 = __importDefault(require("./adapter/IPCPublisher"));
 var NetworkPing_impl_1 = __importDefault(require("./adapter/metrics/NetworkPing.impl"));
-var NeDBImpl_1 = __importDefault(require("./adapter/TimeSeriesStore/NeDBImpl"));
+var TimeSeriesStore = __importStar(require("./adapter/TimeSeriesStore"));
 var DashboardInteractor_1 = __importDefault(require("./usecase/DashboardInteractor"));
 var App = /** @class */ (function () {
     function App(window) {
@@ -67,8 +86,8 @@ var App = /** @class */ (function () {
                         return [4 /*yield*/, ElectronStore_1.default.initDashboardDB()];
                     case 2:
                         dashDB = _a.sent();
-                        tsStore = new NeDBImpl_1.default(tsDB);
-                        dashboardStore = new ElectronStoreImpl_1.default(dashDB);
+                        tsStore = new TimeSeriesStore.NedbAdapter(tsDB);
+                        dashboardStore = new DashboardStore.ElectronStoreAdapter(dashDB);
                         interactor = new DashboardInteractor_1.default(pub, tsStore, dashboardStore, metrics);
                         controller = new IPCController_1.default(interactor);
                         controller.registerHandlers();

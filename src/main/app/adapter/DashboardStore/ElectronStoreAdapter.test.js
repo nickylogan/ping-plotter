@@ -52,7 +52,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var electron_store_1 = __importDefault(require("electron-store"));
 var jest_when_1 = require("jest-when");
-var ElectronStoreImpl_1 = __importDefault(require("./ElectronStoreImpl"));
+var ElectronStoreAdapter_1 = __importDefault(require("./ElectronStoreAdapter"));
 jest.mock('electron-store');
 describe('addWidget()', function () {
     var id = 'widget-id';
@@ -74,7 +74,7 @@ describe('addWidget()', function () {
                     electron_store_1.default.prototype.has = mockHas;
                     electron_store_1.default.prototype.set = mockSet;
                     store = new electron_store_1.default();
-                    impl = new ElectronStoreImpl_1.default(store);
+                    impl = new ElectronStoreAdapter_1.default(store);
                     return [4 /*yield*/, expect(impl.addWidget(id, widget)).resolves.toBeUndefined()];
                 case 1:
                     _a.sent();
@@ -92,7 +92,7 @@ describe('addWidget()', function () {
                     electron_store_1.default.prototype.has = mockHas;
                     electron_store_1.default.prototype.set = mockSet;
                     store = new electron_store_1.default();
-                    impl = new ElectronStoreImpl_1.default(store);
+                    impl = new ElectronStoreAdapter_1.default(store);
                     return [4 /*yield*/, expect(impl.addWidget(id, widget)).rejects.toBeDefined()];
                 case 1:
                     _a.sent();
@@ -112,7 +112,7 @@ describe('addWidget()', function () {
                     electron_store_1.default.prototype.has = mockHas;
                     electron_store_1.default.prototype.set = mockSet;
                     store = new electron_store_1.default();
-                    impl = new ElectronStoreImpl_1.default(store);
+                    impl = new ElectronStoreAdapter_1.default(store);
                     return [4 /*yield*/, expect(impl.addWidget(id, widget)).rejects.toBeDefined()];
                 case 1:
                     _a.sent();
@@ -132,7 +132,7 @@ describe('deleteWidget()', function () {
                     jest_when_1.when(mockDelete).expectCalledWith("widgets." + id);
                     electron_store_1.default.prototype.delete = mockDelete;
                     store = new electron_store_1.default();
-                    impl = new ElectronStoreImpl_1.default(store);
+                    impl = new ElectronStoreAdapter_1.default(store);
                     return [4 /*yield*/, expect(impl.deleteWidget(id)).resolves.toBeUndefined()];
                 case 1:
                     _a.sent();
@@ -163,7 +163,7 @@ describe('get()', function () {
                     jest_when_1.when(mockGet).expectCalledWith('widgets').mockReturnValue(widgets);
                     electron_store_1.default.prototype.get = mockGet;
                     store = new electron_store_1.default();
-                    impl = new ElectronStoreImpl_1.default(store);
+                    impl = new ElectronStoreAdapter_1.default(store);
                     return [4 /*yield*/, expect(impl.get()).resolves.toEqual(dashboard)];
                 case 1:
                     _a.sent();
@@ -190,7 +190,7 @@ describe('getWidget()', function () {
                     jest_when_1.when(mockGet).expectCalledWith("widgets." + id).mockReturnValue(widget);
                     electron_store_1.default.prototype.get = mockGet;
                     store = new electron_store_1.default();
-                    impl = new ElectronStoreImpl_1.default(store);
+                    impl = new ElectronStoreAdapter_1.default(store);
                     return [4 /*yield*/, expect(impl.getWidget(id)).resolves.toEqual(widget)];
                 case 1:
                     _a.sent();
@@ -207,7 +207,7 @@ describe('getWidget()', function () {
                     jest_when_1.when(mockGet).expectCalledWith("widgets." + id).mockReturnValue(undefined);
                     electron_store_1.default.prototype.get = mockGet;
                     store = new electron_store_1.default();
-                    impl = new ElectronStoreImpl_1.default(store);
+                    impl = new ElectronStoreAdapter_1.default(store);
                     return [4 /*yield*/, expect(impl.getWidget(id)).rejects.toBeDefined()];
                 case 1:
                     _a.sent();
@@ -244,7 +244,7 @@ describe('updateWidget()', function () {
                     electron_store_1.default.prototype.get = mockGet;
                     electron_store_1.default.prototype.set = mockSet;
                     store = new electron_store_1.default();
-                    impl = new ElectronStoreImpl_1.default(store);
+                    impl = new ElectronStoreAdapter_1.default(store);
                     return [4 /*yield*/, expect(impl.updateWidget(id, edit)).resolves.toBeUndefined()];
                 case 1:
                     _a.sent();
@@ -262,7 +262,7 @@ describe('updateWidget()', function () {
                     electron_store_1.default.prototype.get = mockGet;
                     electron_store_1.default.prototype.set = mockSet;
                     store = new electron_store_1.default();
-                    impl = new ElectronStoreImpl_1.default(store);
+                    impl = new ElectronStoreAdapter_1.default(store);
                     return [4 /*yield*/, expect(impl.updateWidget(id, widget)).rejects.toBeDefined()];
                 case 1:
                     _a.sent();
@@ -282,7 +282,7 @@ describe('updateWidget()', function () {
                     electron_store_1.default.prototype.get = mockGet;
                     electron_store_1.default.prototype.set = mockSet;
                     store = new electron_store_1.default();
-                    impl = new ElectronStoreImpl_1.default(store);
+                    impl = new ElectronStoreAdapter_1.default(store);
                     return [4 /*yield*/, expect(impl.updateWidget(id, widget)).rejects.toBeDefined()];
                 case 1:
                     _a.sent();

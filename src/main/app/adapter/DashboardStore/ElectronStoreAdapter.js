@@ -11,11 +11,11 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var ElectronStoreImpl = /** @class */ (function () {
-    function ElectronStoreImpl(store) {
+var ElectronStoreAdapter = /** @class */ (function () {
+    function ElectronStoreAdapter(store) {
         this.store = store;
     }
-    ElectronStoreImpl.prototype.addWidget = function (id, widget) {
+    ElectronStoreAdapter.prototype.addWidget = function (id, widget) {
         if (this.store.has("widgets." + id)) {
             return Promise.reject('widget already exists');
         }
@@ -27,23 +27,23 @@ var ElectronStoreImpl = /** @class */ (function () {
         }
         return Promise.resolve();
     };
-    ElectronStoreImpl.prototype.deleteWidget = function (id) {
+    ElectronStoreAdapter.prototype.deleteWidget = function (id) {
         this.store.delete("widgets." + id);
         return Promise.resolve();
     };
-    ElectronStoreImpl.prototype.get = function () {
+    ElectronStoreAdapter.prototype.get = function () {
         var title = this.store.get('title');
         var widgets = this.store.get('widgets') || {};
         return Promise.resolve({ title: title, widgets: widgets });
     };
-    ElectronStoreImpl.prototype.getWidget = function (id) {
+    ElectronStoreAdapter.prototype.getWidget = function (id) {
         var widget = this.store.get("widgets." + id);
         if (widget === undefined) {
             return Promise.reject("cannot find widget#" + id);
         }
         return Promise.resolve(widget);
     };
-    ElectronStoreImpl.prototype.updateWidget = function (id, edit) {
+    ElectronStoreAdapter.prototype.updateWidget = function (id, edit) {
         var widget = this.store.get("widgets." + id);
         if (widget === undefined) {
             return Promise.reject("cannot find widget#" + id);
@@ -57,6 +57,6 @@ var ElectronStoreImpl = /** @class */ (function () {
         }
         return Promise.resolve(undefined);
     };
-    return ElectronStoreImpl;
+    return ElectronStoreAdapter;
 }());
-exports.default = ElectronStoreImpl;
+exports.default = ElectronStoreAdapter;
