@@ -1,9 +1,9 @@
-import { DataPoint } from '../definitions/datapoint';
-import { TimeSeries } from '../definitions/timeseries';
-import TimeSeriesStore from '../usecase/TimeSeriesStore';
+import { DataPoint } from '../../definitions/datapoint';
+import { TimeSeries } from '../../definitions/timeseries';
+import TimeSeriesStore from '../../usecase/TimeSeriesStore';
 import NeDB from 'nedb';
 
-export class NeDBImpl implements TimeSeriesStore {
+class NeDBImpl implements TimeSeriesStore {
   private readonly db: NeDB;
 
   constructor(db: NeDB) {
@@ -78,3 +78,5 @@ export class NeDBImpl implements TimeSeriesStore {
     });
   }
 }
+
+export default NeDBImpl;
