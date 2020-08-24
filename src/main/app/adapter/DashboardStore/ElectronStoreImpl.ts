@@ -1,4 +1,3 @@
-
 import ElectronStore, { Schema } from 'electron-store';
 import { Dashboard } from '../../definitions/dashboard';
 import { Widget, WidgetEdit } from '../../definitions/widget';
@@ -24,10 +23,8 @@ class ElectronStoreImpl implements DashboardStore {
     },
   };
 
-  constructor() {
-    this.store = new ElectronStore({
-      schema: ElectronStoreImpl.schema,
-    });
+  constructor(store: ElectronStore) {
+    this.store = store;
   }
 
   addWidget(id: string, widget: Widget): Promise<void> {
