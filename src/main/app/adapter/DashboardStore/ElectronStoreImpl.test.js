@@ -52,11 +52,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var electron_store_1 = __importDefault(require("electron-store"));
 var jest_when_1 = require("jest-when");
-var DashboardStore_impl_1 = __importDefault(require("./DashboardStore.impl"));
+var ElectronStoreImpl_1 = __importDefault(require("./ElectronStoreImpl"));
 jest.mock('electron-store');
-var mockedStore = electron_store_1.default;
+var mockeimpl = electron_store_1.default;
 beforeEach(function () {
-    mockedStore.mockClear();
+    mockeimpl.mockClear();
 });
 describe('addWidget()', function () {
     var id = 'widget-id';
@@ -68,7 +68,7 @@ describe('addWidget()', function () {
         interval: 2000,
     };
     it('should store a widget to electron-store', function () { return __awaiter(void 0, void 0, void 0, function () {
-        var mockHas, mockSet, dStore;
+        var mockHas, mockSet, impl;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -77,8 +77,8 @@ describe('addWidget()', function () {
                     jest_when_1.when(mockSet).expectCalledWith("widgets." + id, widget);
                     electron_store_1.default.prototype.has = mockHas;
                     electron_store_1.default.prototype.set = mockSet;
-                    dStore = new DashboardStore_impl_1.default();
-                    return [4 /*yield*/, expect(dStore.addWidget(id, widget)).resolves.toBeUndefined()];
+                    impl = new ElectronStoreImpl_1.default();
+                    return [4 /*yield*/, expect(impl.addWidget(id, widget)).resolves.toBeUndefined()];
                 case 1:
                     _a.sent();
                     return [2 /*return*/];
@@ -86,7 +86,7 @@ describe('addWidget()', function () {
         });
     }); });
     it('should not allow storing a duplicate widget', function () { return __awaiter(void 0, void 0, void 0, function () {
-        var mockHas, mockSet, dStore;
+        var mockHas, mockSet, impl;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -94,8 +94,8 @@ describe('addWidget()', function () {
                     jest_when_1.when(mockHas).expectCalledWith("widgets." + id).mockReturnValue(true);
                     electron_store_1.default.prototype.has = mockHas;
                     electron_store_1.default.prototype.set = mockSet;
-                    dStore = new DashboardStore_impl_1.default();
-                    return [4 /*yield*/, expect(dStore.addWidget(id, widget)).rejects.toBeDefined()];
+                    impl = new ElectronStoreImpl_1.default();
+                    return [4 /*yield*/, expect(impl.addWidget(id, widget)).rejects.toBeDefined()];
                 case 1:
                     _a.sent();
                     expect(mockSet).not.toBeCalled();
@@ -104,7 +104,7 @@ describe('addWidget()', function () {
         });
     }); });
     it('should reject when set fails', function () { return __awaiter(void 0, void 0, void 0, function () {
-        var mockHas, mockSet, dStore;
+        var mockHas, mockSet, impl;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -113,8 +113,8 @@ describe('addWidget()', function () {
                     jest_when_1.when(mockSet).expectCalledWith("widgets." + id).mockImplementation(function () { throw new Error(); });
                     electron_store_1.default.prototype.has = mockHas;
                     electron_store_1.default.prototype.set = mockSet;
-                    dStore = new DashboardStore_impl_1.default();
-                    return [4 /*yield*/, expect(dStore.addWidget(id, widget)).rejects.toBeDefined()];
+                    impl = new ElectronStoreImpl_1.default();
+                    return [4 /*yield*/, expect(impl.addWidget(id, widget)).rejects.toBeDefined()];
                 case 1:
                     _a.sent();
                     return [2 /*return*/];
@@ -125,15 +125,15 @@ describe('addWidget()', function () {
 describe('deleteWidget()', function () {
     var id = 'widget-id';
     it('should delete a widget from electron-store', function () { return __awaiter(void 0, void 0, void 0, function () {
-        var mockDelete, dStore;
+        var mockDelete, impl;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     mockDelete = jest.fn();
                     jest_when_1.when(mockDelete).expectCalledWith("widgets." + id);
                     electron_store_1.default.prototype.delete = mockDelete;
-                    dStore = new DashboardStore_impl_1.default();
-                    return [4 /*yield*/, expect(dStore.deleteWidget(id)).resolves.toBeUndefined()];
+                    impl = new ElectronStoreImpl_1.default();
+                    return [4 /*yield*/, expect(impl.deleteWidget(id)).resolves.toBeUndefined()];
                 case 1:
                     _a.sent();
                     return [2 /*return*/];
@@ -154,7 +154,7 @@ describe('get()', function () {
     };
     var dashboard = { title: title, widgets: widgets };
     it('should return the dashboard in electron-store', function () { return __awaiter(void 0, void 0, void 0, function () {
-        var mockGet, dStore;
+        var mockGet, impl;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -162,8 +162,8 @@ describe('get()', function () {
                     jest_when_1.when(mockGet).expectCalledWith('title').mockReturnValueOnce('dashboard-title');
                     jest_when_1.when(mockGet).expectCalledWith('widgets').mockReturnValue(widgets);
                     electron_store_1.default.prototype.get = mockGet;
-                    dStore = new DashboardStore_impl_1.default();
-                    return [4 /*yield*/, expect(dStore.get()).resolves.toEqual(dashboard)];
+                    impl = new ElectronStoreImpl_1.default();
+                    return [4 /*yield*/, expect(impl.get()).resolves.toEqual(dashboard)];
                 case 1:
                     _a.sent();
                     return [2 /*return*/];
@@ -181,15 +181,15 @@ describe('getWidget()', function () {
         interval: 2000,
     };
     it('should return the widget in electron-store', function () { return __awaiter(void 0, void 0, void 0, function () {
-        var mockGet, dStore;
+        var mockGet, impl;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     mockGet = jest.fn();
                     jest_when_1.when(mockGet).expectCalledWith("widgets." + id).mockReturnValue(widget);
                     electron_store_1.default.prototype.get = mockGet;
-                    dStore = new DashboardStore_impl_1.default();
-                    return [4 /*yield*/, expect(dStore.getWidget(id)).resolves.toEqual(widget)];
+                    impl = new ElectronStoreImpl_1.default();
+                    return [4 /*yield*/, expect(impl.getWidget(id)).resolves.toEqual(widget)];
                 case 1:
                     _a.sent();
                     return [2 /*return*/];
@@ -197,15 +197,15 @@ describe('getWidget()', function () {
         });
     }); });
     it('should reject if the widget does not exist', function () { return __awaiter(void 0, void 0, void 0, function () {
-        var mockGet, dStore;
+        var mockGet, impl;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     mockGet = jest.fn();
                     jest_when_1.when(mockGet).expectCalledWith("widgets." + id).mockReturnValue(undefined);
                     electron_store_1.default.prototype.get = mockGet;
-                    dStore = new DashboardStore_impl_1.default();
-                    return [4 /*yield*/, expect(dStore.getWidget(id)).rejects.toBeDefined()];
+                    impl = new ElectronStoreImpl_1.default();
+                    return [4 /*yield*/, expect(impl.getWidget(id)).rejects.toBeDefined()];
                 case 1:
                     _a.sent();
                     return [2 /*return*/];
@@ -231,7 +231,7 @@ describe('updateWidget()', function () {
     };
     var updated = __assign(__assign({}, widget), edit);
     it('should update the widget in electron-store', function () { return __awaiter(void 0, void 0, void 0, function () {
-        var mockGet, mockSet, dStore;
+        var mockGet, mockSet, impl;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -240,8 +240,8 @@ describe('updateWidget()', function () {
                     jest_when_1.when(mockSet).expectCalledWith("widgets." + id, updated);
                     electron_store_1.default.prototype.get = mockGet;
                     electron_store_1.default.prototype.set = mockSet;
-                    dStore = new DashboardStore_impl_1.default();
-                    return [4 /*yield*/, expect(dStore.updateWidget(id, edit)).resolves.toBeUndefined()];
+                    impl = new ElectronStoreImpl_1.default();
+                    return [4 /*yield*/, expect(impl.updateWidget(id, edit)).resolves.toBeUndefined()];
                 case 1:
                     _a.sent();
                     return [2 /*return*/];
@@ -249,7 +249,7 @@ describe('updateWidget()', function () {
         });
     }); });
     it('should reject if the widget does not exist', function () { return __awaiter(void 0, void 0, void 0, function () {
-        var mockGet, mockSet, dStore;
+        var mockGet, mockSet, impl;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -257,8 +257,8 @@ describe('updateWidget()', function () {
                     jest_when_1.when(mockGet).expectCalledWith("widgets." + id).mockReturnValue(undefined);
                     electron_store_1.default.prototype.get = mockGet;
                     electron_store_1.default.prototype.set = mockSet;
-                    dStore = new DashboardStore_impl_1.default();
-                    return [4 /*yield*/, expect(dStore.updateWidget(id, widget)).rejects.toBeDefined()];
+                    impl = new ElectronStoreImpl_1.default();
+                    return [4 /*yield*/, expect(impl.updateWidget(id, widget)).rejects.toBeDefined()];
                 case 1:
                     _a.sent();
                     expect(mockSet).not.toBeCalled();
@@ -267,7 +267,7 @@ describe('updateWidget()', function () {
         });
     }); });
     it('should reject if store fails', function () { return __awaiter(void 0, void 0, void 0, function () {
-        var mockGet, mockSet, dStore;
+        var mockGet, mockSet, impl;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -276,8 +276,8 @@ describe('updateWidget()', function () {
                     jest_when_1.when(mockSet).expectCalledWith("widgets." + id, updated).mockImplementation(function () { throw new Error(); });
                     electron_store_1.default.prototype.get = mockGet;
                     electron_store_1.default.prototype.set = mockSet;
-                    dStore = new DashboardStore_impl_1.default();
-                    return [4 /*yield*/, expect(dStore.updateWidget(id, widget)).rejects.toBeDefined()];
+                    impl = new ElectronStoreImpl_1.default();
+                    return [4 /*yield*/, expect(impl.updateWidget(id, widget)).rejects.toBeDefined()];
                 case 1:
                     _a.sent();
                     return [2 /*return*/];

@@ -1,13 +1,13 @@
 import Store from 'electron-store';
 import { when } from 'jest-when';
-import { Widget, WidgetEdit } from '../definitions/widget';
-import DashboardStoreImpl from './DashboardStore.impl';
+import { Widget, WidgetEdit } from '../../definitions/widget';
+import ElectronStoreImpl from './ElectronStoreImpl';
 
 jest.mock('electron-store');
-const mockedStore = Store as jest.Mock<Store>;
+const mockeimpl = Store as jest.Mock<Store>;
 
 beforeEach(() => {
-  mockedStore.mockClear();
+  mockeimpl.mockClear();
 });
 
 describe('addWidget()', () => {
@@ -27,8 +27,8 @@ describe('addWidget()', () => {
     Store.prototype.has = mockHas;
     Store.prototype.set = mockSet;
 
-    const dStore = new DashboardStoreImpl();
-    await expect(dStore.addWidget(id, widget)).resolves.toBeUndefined();
+    const impl = new ElectronStoreImpl();
+    await expect(impl.addWidget(id, widget)).resolves.toBeUndefined();
   });
 
   it('should not allow storing a duplicate widget', async () => {
@@ -37,8 +37,8 @@ describe('addWidget()', () => {
     Store.prototype.has = mockHas;
     Store.prototype.set = mockSet;
 
-    const dStore = new DashboardStoreImpl();
-    await expect(dStore.addWidget(id, widget)).rejects.toBeDefined();
+    const impl = new ElectronStoreImpl();
+    await expect(impl.addWidget(id, widget)).rejects.toBeDefined();
 
     expect(mockSet).not.toBeCalled();
   });
@@ -50,8 +50,8 @@ describe('addWidget()', () => {
     Store.prototype.has = mockHas;
     Store.prototype.set = mockSet;
 
-    const dStore = new DashboardStoreImpl();
-    await expect(dStore.addWidget(id, widget)).rejects.toBeDefined();
+    const impl = new ElectronStoreImpl();
+    await expect(impl.addWidget(id, widget)).rejects.toBeDefined();
   });
 });
 
@@ -63,8 +63,8 @@ describe('deleteWidget()', () => {
     when(mockDelete).expectCalledWith(`widgets.${id}`);
     Store.prototype.delete = mockDelete;
 
-    const dStore = new DashboardStoreImpl();
-    await expect(dStore.deleteWidget(id)).resolves.toBeUndefined();
+    const impl = new ElectronStoreImpl();
+    await expect(impl.deleteWidget(id)).resolves.toBeUndefined();
   });
 });
 
@@ -87,8 +87,8 @@ describe('get()', () => {
     when(mockGet).expectCalledWith('widgets').mockReturnValue(widgets);
     Store.prototype.get = mockGet;
 
-    const dStore = new DashboardStoreImpl();
-    await expect(dStore.get()).resolves.toEqual(dashboard);
+    const impl = new ElectronStoreImpl();
+    await expect(impl.get()).resolves.toEqual(dashboard);
   });
 });
 
@@ -107,8 +107,8 @@ describe('getWidget()', () => {
     when(mockGet).expectCalledWith(`widgets.${id}`).mockReturnValue(widget);
     Store.prototype.get = mockGet;
 
-    const dStore = new DashboardStoreImpl();
-    await expect(dStore.getWidget(id)).resolves.toEqual(widget);
+    const impl = new ElectronStoreImpl();
+    await expect(impl.getWidget(id)).resolves.toEqual(widget);
   });
 
   it('should reject if the widget does not exist', async () => {
@@ -116,8 +116,8 @@ describe('getWidget()', () => {
     when(mockGet).expectCalledWith(`widgets.${id}`).mockReturnValue(undefined);
     Store.prototype.get = mockGet;
 
-    const dStore = new DashboardStoreImpl();
-    await expect(dStore.getWidget(id)).rejects.toBeDefined();
+    const impl = new ElectronStoreImpl();
+    await expect(impl.getWidget(id)).rejects.toBeDefined();
   });
 });
 
@@ -146,8 +146,8 @@ describe('updateWidget()', () => {
     Store.prototype.get = mockGet;
     Store.prototype.set = mockSet;
 
-    const dStore = new DashboardStoreImpl();
-    await expect(dStore.updateWidget(id, edit)).resolves.toBeUndefined();
+    const impl = new ElectronStoreImpl();
+    await expect(impl.updateWidget(id, edit)).resolves.toBeUndefined();
   });
 
   it('should reject if the widget does not exist', async () => {
@@ -156,8 +156,8 @@ describe('updateWidget()', () => {
     Store.prototype.get = mockGet;
     Store.prototype.set = mockSet;
 
-    const dStore = new DashboardStoreImpl();
-    await expect(dStore.updateWidget(id, widget)).rejects.toBeDefined();
+    const impl = new ElectronStoreImpl();
+    await expect(impl.updateWidget(id, widget)).rejects.toBeDefined();
 
     expect(mockSet).not.toBeCalled();
   });
@@ -169,7 +169,7 @@ describe('updateWidget()', () => {
     Store.prototype.get = mockGet;
     Store.prototype.set = mockSet;
 
-    const dStore = new DashboardStoreImpl();
-    await expect(dStore.updateWidget(id, widget)).rejects.toBeDefined();
+    const impl = new ElectronStoreImpl();
+    await expect(impl.updateWidget(id, widget)).rejects.toBeDefined();
   });
 });
