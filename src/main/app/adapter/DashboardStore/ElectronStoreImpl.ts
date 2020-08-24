@@ -1,9 +1,10 @@
-import { Dashboard } from '../definitions/dashboard';
-import { Widget, WidgetEdit } from '../definitions/widget';
-import DashboardStore from '../usecase/DashboardStore';
-import ElectronStore, { Schema } from 'electron-store';
 
-class DashboardStoreImpl implements DashboardStore {
+import ElectronStore, { Schema } from 'electron-store';
+import { Dashboard } from '../../definitions/dashboard';
+import { Widget, WidgetEdit } from '../../definitions/widget';
+import DashboardStore from '../../usecase/DashboardStore';
+
+class ElectronStoreImpl implements DashboardStore {
   private readonly store: ElectronStore<any>;
   private static readonly schema: Schema<any> = {
     title: {
@@ -25,7 +26,7 @@ class DashboardStoreImpl implements DashboardStore {
 
   constructor() {
     this.store = new ElectronStore({
-      schema: DashboardStoreImpl.schema,
+      schema: ElectronStoreImpl.schema,
     });
   }
 
@@ -80,4 +81,4 @@ class DashboardStoreImpl implements DashboardStore {
   }
 }
 
-export default DashboardStoreImpl;
+export default ElectronStoreImpl;

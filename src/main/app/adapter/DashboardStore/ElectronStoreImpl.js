@@ -15,13 +15,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var electron_store_1 = __importDefault(require("electron-store"));
-var DashboardStoreImpl = /** @class */ (function () {
-    function DashboardStoreImpl() {
+var ElectronStoreImpl = /** @class */ (function () {
+    function ElectronStoreImpl() {
         this.store = new electron_store_1.default({
-            schema: DashboardStoreImpl.schema,
+            schema: ElectronStoreImpl.schema,
         });
     }
-    DashboardStoreImpl.prototype.addWidget = function (id, widget) {
+    ElectronStoreImpl.prototype.addWidget = function (id, widget) {
         if (this.store.has("widgets." + id)) {
             return Promise.reject('widget already exists');
         }
@@ -33,23 +33,23 @@ var DashboardStoreImpl = /** @class */ (function () {
         }
         return Promise.resolve();
     };
-    DashboardStoreImpl.prototype.deleteWidget = function (id) {
+    ElectronStoreImpl.prototype.deleteWidget = function (id) {
         this.store.delete("widgets." + id);
         return Promise.resolve();
     };
-    DashboardStoreImpl.prototype.get = function () {
+    ElectronStoreImpl.prototype.get = function () {
         var title = this.store.get('title');
         var widgets = this.store.get('widgets') || {};
         return Promise.resolve({ title: title, widgets: widgets });
     };
-    DashboardStoreImpl.prototype.getWidget = function (id) {
+    ElectronStoreImpl.prototype.getWidget = function (id) {
         var widget = this.store.get("widgets." + id);
         if (widget === undefined) {
             return Promise.reject("cannot find widget#" + id);
         }
         return Promise.resolve(widget);
     };
-    DashboardStoreImpl.prototype.updateWidget = function (id, edit) {
+    ElectronStoreImpl.prototype.updateWidget = function (id, edit) {
         var widget = this.store.get("widgets." + id);
         if (widget === undefined) {
             return Promise.reject("cannot find widget#" + id);
@@ -63,7 +63,7 @@ var DashboardStoreImpl = /** @class */ (function () {
         }
         return Promise.resolve(undefined);
     };
-    DashboardStoreImpl.schema = {
+    ElectronStoreImpl.schema = {
         title: {
             type: 'string',
         },
@@ -80,6 +80,6 @@ var DashboardStoreImpl = /** @class */ (function () {
             },
         },
     };
-    return DashboardStoreImpl;
+    return ElectronStoreImpl;
 }());
-exports.default = DashboardStoreImpl;
+exports.default = ElectronStoreImpl;
