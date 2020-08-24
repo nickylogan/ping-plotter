@@ -1,27 +1,10 @@
-import ElectronStore, { Schema } from 'electron-store';
+import ElectronStore from 'electron-store';
 import { Dashboard } from '../../definitions/dashboard';
 import { Widget, WidgetEdit } from '../../definitions/widget';
 import DashboardStore from '../../usecase/DashboardStore';
 
 class ElectronStoreImpl implements DashboardStore {
   private readonly store: ElectronStore<any>;
-  private static readonly schema: Schema<any> = {
-    title: {
-      type: 'string',
-    },
-    widgets: {
-      additionalProperties: {
-        type: 'object',
-        properties: {
-          id: { type: 'string' },
-          title: { type: 'string' },
-          metric: { type: 'string' },
-          type: { type: 'string' },
-          interval: { type: 'number' },
-        },
-      },
-    },
-  };
 
   constructor(store: ElectronStore) {
     this.store = store;

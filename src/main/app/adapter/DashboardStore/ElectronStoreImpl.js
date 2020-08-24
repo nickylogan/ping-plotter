@@ -10,16 +10,10 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-var electron_store_1 = __importDefault(require("electron-store"));
 var ElectronStoreImpl = /** @class */ (function () {
-    function ElectronStoreImpl() {
-        this.store = new electron_store_1.default({
-            schema: ElectronStoreImpl.schema,
-        });
+    function ElectronStoreImpl(store) {
+        this.store = store;
     }
     ElectronStoreImpl.prototype.addWidget = function (id, widget) {
         if (this.store.has("widgets." + id)) {
@@ -62,23 +56,6 @@ var ElectronStoreImpl = /** @class */ (function () {
             return Promise.reject("failed to update widget: " + e);
         }
         return Promise.resolve(undefined);
-    };
-    ElectronStoreImpl.schema = {
-        title: {
-            type: 'string',
-        },
-        widgets: {
-            additionalProperties: {
-                type: 'object',
-                properties: {
-                    id: { type: 'string' },
-                    title: { type: 'string' },
-                    metric: { type: 'string' },
-                    type: { type: 'string' },
-                    interval: { type: 'number' },
-                },
-            },
-        },
     };
     return ElectronStoreImpl;
 }());
