@@ -40,8 +40,7 @@ class DashboardInteractor {
     widget.id = id;
 
     try {
-      // TODO: uncomment when store is implemented
-      // await this.dashboardStore.addWidget(id, widget);
+      await this.dashboardStore.addWidget(id, widget);
 
       this.startPublisher(widget);
 
@@ -67,8 +66,7 @@ class DashboardInteractor {
 
       this.widgetPub.publishWidgetMessage(widget.id, { data, timestamp }).catch(stop);
 
-      // TODO: uncomment when implemented
-      // await this.tsStore.append(widget.metric, data);
+      await this.tsStore.append(widget.metric, data);
     }, widget.interval);
   }
 
