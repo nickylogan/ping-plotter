@@ -28,7 +28,13 @@ class DashboardInteractor {
   }
 
   async init(): Promise<Dashboard> {
-    return this.dashboardStore.get();
+    try {
+      const dashboard = await this.dashboardStore.get();
+      Object.values(dashboard.widgets).forEach(w => this.startPublisher(w));
+      return Promise.resolve(dashboard);
+    } catch (e) {
+      return Promise.reject(e);
+    }
   }
 
   async getWidget(id: string): Promise<Widget> {
@@ -46,7 +52,6 @@ class DashboardInteractor {
 
       return Promise.resolve(id);
     } catch (e) {
-      // TODO: parse error
       return Promise.reject(e);
     }
   }
