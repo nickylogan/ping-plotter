@@ -1,7 +1,7 @@
 import { ipcMain } from 'electron';
 import { Events } from '../definitions/events';
 import { Message } from '../definitions/message';
-import { Widget } from '../definitions/widget';
+import { Widget, WidgetEdit } from '../definitions/widget';
 import DashboardInteractor from '../usecase/DashboardInteractor';
 
 class IPCController {
@@ -30,8 +30,8 @@ class IPCController {
     });
 
     ipcMain.on(Events.REQ_EDIT_WIDGET, (evt, message: Message) => {
-      const updated = message.data as Widget;
-      this.interactor.updateWidget(updated.id, updated)
+      const edit = message.data as WidgetEdit;
+      this.interactor.updateWidget(edit.id, edit)
         .then(() => evt.reply(Events.RES_OK_EDIT_WIDGET))
         .catch(err => evt.reply(Events.RES_ERR_EDIT_WIDGET, err));
     });

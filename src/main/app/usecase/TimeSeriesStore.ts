@@ -4,9 +4,9 @@ import { TimeSeries } from '../definitions/timeseries';
 interface TimeSeriesStore {
   append(key: string, value: DataPoint): Promise<void>;
 
-  query(key: string): Promise<DataPoint>;
+  query(key: string): Promise<DataPoint | undefined>;
 
-  fetch(key: string, from: number, to: number): Promise<TimeSeries>;
+  fetch(key: string, begin: number, end: number): Promise<TimeSeries>;
 
   fetchLast(key: string, duration: number): Promise<TimeSeries>;
 

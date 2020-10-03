@@ -53,8 +53,22 @@ var DashboardInteractor = /** @class */ (function () {
     }
     DashboardInteractor.prototype.init = function () {
         return __awaiter(this, void 0, void 0, function () {
+            var dashboard, e_1;
+            var _this = this;
             return __generator(this, function (_a) {
-                return [2 /*return*/, this.dashboardStore.get()];
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, this.dashboardStore.get()];
+                    case 1:
+                        dashboard = _a.sent();
+                        Object.values(dashboard.widgets).forEach(function (w) { return _this.startPublisher(w); });
+                        return [2 /*return*/, Promise.resolve(dashboard)];
+                    case 2:
+                        e_1 = _a.sent();
+                        return [2 /*return*/, Promise.reject(e_1)];
+                    case 3: return [2 /*return*/];
+                }
             });
         });
     };
@@ -67,28 +81,32 @@ var DashboardInteractor = /** @class */ (function () {
     };
     DashboardInteractor.prototype.addWidget = function (widget) {
         return __awaiter(this, void 0, void 0, function () {
-            var id;
+            var id, e_2;
             return __generator(this, function (_a) {
-                id = uuid_1.v4();
-                widget.id = id;
-                try {
-                    // TODO: uncomment when store is implemented
-                    // await this.dashboardStore.addWidget(id, widget);
-                    this.startPublisher(widget);
-                    return [2 /*return*/, Promise.resolve(id)];
+                switch (_a.label) {
+                    case 0:
+                        id = uuid_1.v4();
+                        widget.id = id;
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, this.dashboardStore.addWidget(id, widget)];
+                    case 2:
+                        _a.sent();
+                        this.startPublisher(widget);
+                        return [2 /*return*/, Promise.resolve(id)];
+                    case 3:
+                        e_2 = _a.sent();
+                        return [2 /*return*/, Promise.reject(e_2)];
+                    case 4: return [2 /*return*/];
                 }
-                catch (e) {
-                    // TODO: parse error
-                    return [2 /*return*/, Promise.reject(e)];
-                }
-                return [2 /*return*/];
             });
         });
     };
-    DashboardInteractor.prototype.updateWidget = function (id, widget) {
+    DashboardInteractor.prototype.updateWidget = function (id, edit) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, this.dashboardStore.updateWidget(id, widget)];
+                return [2 /*return*/, this.dashboardStore.updateWidget(id, edit)];
             });
         });
     };
@@ -111,6 +129,9 @@ var DashboardInteractor = /** @class */ (function () {
                     case 1:
                         data = _a.sent();
                         this.widgetPub.publishWidgetMessage(widget.id, { data: data, timestamp: timestamp }).catch(stop);
+                        return [4 /*yield*/, this.tsStore.append(widget.metric, data)];
+                    case 2:
+                        _a.sent();
                         return [2 /*return*/];
                 }
             });

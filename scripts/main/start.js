@@ -20,19 +20,6 @@ function spawnElectronProcess() {
 
   electronProcess.stdout.pipe(process.stdout);
   electronProcess.stderr.pipe(process.stderr);
-
-  electronProcess.on('close', (code) => {
-    // Force-killed processes don't return an exit code.
-    if (code === null) {
-      return;
-    }
-
-    // Kill watch process once electron exited.
-    console.log(
-      chalk.magenta('Electron process exited, killing other processes...')
-    );
-    watch && watch.kill();
-  });
 }
 
 // On first successful compilation, wait for the react dev server to start.

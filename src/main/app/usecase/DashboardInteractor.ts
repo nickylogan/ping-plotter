@@ -2,7 +2,7 @@ import autoBind from 'auto-bind';
 import { v4 as uuidv4 } from 'uuid';
 import { Dashboard } from '../definitions/dashboard';
 import { DataPoint } from '../definitions/datapoint';
-import { Widget } from '../definitions/widget';
+import { Widget, WidgetEdit } from '../definitions/widget';
 import DashboardStore from './DashboardStore';
 import NetworkPing from './metrics/NetworkPing';
 import Repeater, { RepeatTerminator } from './Repeater';
@@ -28,7 +28,13 @@ class DashboardInteractor {
   }
 
   async init(): Promise<Dashboard> {
-    return this.dashboardStore.get();
+    try {
+      const dashboard = await this.dashboardStore.get();
+      Object.values(dashboard.widgets).forEach(w => this.startPublisher(w));
+      return Promise.resolve(dashboard);
+    } catch (e) {
+      return Promise.reject(e);
+    }
   }
 
   async getWidget(id: string): Promise<Widget> {
@@ -40,20 +46,18 @@ class DashboardInteractor {
     widget.id = id;
 
     try {
-      // TODO: uncomment when store is implemented
-      // await this.dashboardStore.addWidget(id, widget);
+      await this.dashboardStore.addWidget(id, widget);
 
       this.startPublisher(widget);
 
       return Promise.resolve(id);
     } catch (e) {
-      // TODO: parse error
       return Promise.reject(e);
     }
   }
 
-  async updateWidget(id: string, widget: Widget): Promise<void> {
-    return this.dashboardStore.updateWidget(id, widget);
+  async updateWidget(id: string, edit: WidgetEdit): Promise<void> {
+    return this.dashboardStore.updateWidget(id, edit);
   }
 
   async deleteWidget(id: string): Promise<void> {
@@ -67,8 +71,7 @@ class DashboardInteractor {
 
       this.widgetPub.publishWidgetMessage(widget.id, { data, timestamp }).catch(stop);
 
-      // TODO: uncomment when implemented
-      // await this.tsStore.append(widget.metric, data);
+      await this.tsStore.append(widget.metric, data);
     }, widget.interval);
   }
 
